@@ -1,0 +1,26 @@
+{
+    "name": "upvotecomment",
+    "description": "Nested coment with upvote and downvote component.",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+        "babel-loader": "^7.1.4",
+        "babel-preset-env": "^1.5.2",
+        "babel-preset-react": "^6.24.1",
+        "css-loader": "^0.28.11",
+        "live-server": "^1.2.0",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "style-loader": "^0.20.3",
+        "webpack": "^4.2.0"
+    },
+    "scripts": {
+        "babel": "babel --presets=env,react src/app.js -o public/scripts/app.js",
+        "start": "live-server public",
+        "webpack": "webpack"
+    },
+    "devDependencies": {
+        "webpack-cli": "^2.0.13"
+    }
+}
