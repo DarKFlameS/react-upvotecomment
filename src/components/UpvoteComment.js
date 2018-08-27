@@ -1,50 +1,27 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Comment from './Comment';
-import commentsData from '../data/comments.json';
+import { connect } from 'react-redux';
+import CommentList from './CommentList';
+import { addComment } from '../actions/commentActions'
 import '../styles/upvotecomment.css';
 
-export default class UpvoteComment extends React.Component
-{
-  constructor (props) {
-    super(props);
-    this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+const UpvoteComment = (props) => (
+  <div>
+    <h1 className="app-title">{props.title}</h1>
 
-    this.state = {
-      comments: commentsData
-    };
-  }
+    <div className="comment-form-container">
+      <form className="comment-form" onSubmit={(e) => {
+        e.preventDefault();
+        let text = e.target.elements.text.value.trim();
+        e.target.elements.text.value = "";
+        props.dispatch(addComment(text))
+      }}>
+        <input type="text" name="text" />
+        <button className="reply" type="submit">Add Comment</button>
+      </form>
+    </div>
 
-  handleCommentSubmit(e) {
-    e.preventDefault();
-    let text = e.target.elements.text.value.trim();
-    e.target.elements.text.value = "";
+    <CommentList />
+  </div>
+);
 
-    let comments = this.state.comments;
-    comments.push({
-      text: text,
-      count: 0
-    });
-
-    this.setState({comments: comments});
-  }
-
-  render () {
-    return (
-      <div>
-        <h1 className="app-title">{this.props.title}</h1>
-
-        <div className="comments">
-          {this.state.comments.map( (comment, index) => <Comment text={comment.text} count={comment.count} key={index} /> )}
-        </div>
-
-        <div className="comment-form-container">
-          <form className="comment-form" onSubmit={this.handleCommentSubmit}>
-            <input type="text" name="text" />
-            <button className="reply" type="submit">Add Comment</button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-}
+export default connect()(UpvoteComment);
